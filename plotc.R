@@ -1,3 +1,5 @@
 x = rnorm(100)
 y = rnorm (100)
+par(mfrow = c(2,1))
 plot(x,y, col = "blue")
+plot(x)
