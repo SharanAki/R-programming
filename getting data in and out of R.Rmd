@@ -1,0 +1,29 @@
+---
+title: "getting data in and out of R"
+author: "sharan"
+date: '2022-05-26'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+data <- read.table("ok.txt")
+data
+```
+
+```{R}
+##Serialize
+x <- list(1,2,3,4)
+serialize(x,NULL)
+
+```
+```{r}
+#End
+```
+
+
+
+
