@@ -1,0 +1,50 @@
+---
+title: "Interfaces to the outside world"
+author: "sharan"
+date: '2022-05-27'
+output: 
+ ioslides_presentation:
+   widescreen: true
+   smaller: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(formatR)
+```
+
+
+
+## File connection
+
+```{r tidy=TRUE}
+con <- url("https://en.wikipedia.org/wiki/Main_Page")
+readLines(con, 5)
+
+```
+
+
+
+## Subsetting a Vector
+
+```{r}
+x<-c("a","b","c","d")
+x[1]
+```
+
+
+```{r}
+x <- matrix(1:9,3,3)
+x
+```
+## removing NAs
+```{r}
+x <- c(1,2,NA,4,NA,5)
+bad <- is.na(x)
+x[!bad]
+```
+
+```{r airquality, echo=TRUE, size="small"}
+head(airquality)
+head(airquality[complete.cases(airquality),])
+```
