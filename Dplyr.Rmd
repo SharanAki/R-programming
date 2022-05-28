@@ -1,0 +1,27 @@
+---
+title: "Untitled"
+author: "sharan"
+date: '2022-05-28'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+# Dplyr 
+
+## select()
+
+```{r}
+chicago <- readRDS("chicago.rds")
+dim(chicago)
+str(chicago)
+head(chicago)
+head(chicago[complete.cases(chicago),])
+sub <- select(chicago, city:dptp)
+head(sub)
+str(select(chicago,ends_with("2")))
+str(select(chicago,starts_with("d")))
+```
