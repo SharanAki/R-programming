@@ -1,0 +1,56 @@
+---
+title: "Untitled"
+author: "sharan"
+date: '2022-05-28'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Vectorized Operation
+
+```{r}
+x <- 1:4
+y <- 6:9
+z <- x + y
+z
+```
+```{r}
+x-y
+x/y
+x*y
+```
+## true matrix multipication
+```{r}
+x <- matrix(1:4,2,2)
+y <- matrix(rep(10,6),2,3)
+x %*% y
+```
+
+# Date and Time
+
+```{r}
+x <- Sys.time()
+x
+class(x)
+```
+```{r}
+p <- as.POSIXlt(x)
+p
+p$mon
+p$wday
+```
+```{r}
+x <- as.Date("2022-01-01")
+y <- strptime("9 DEC 2022 11:30:30", "%d %b %Y %H:%M:%S")
+x <- as.POSIXlt(x)
+y-x
+
+```
+
+
+
+
+
