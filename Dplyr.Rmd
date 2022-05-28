@@ -25,3 +25,11 @@ head(sub)
 str(select(chicago,ends_with("2")))
 str(select(chicago,starts_with("d")))
 ```
+
+## filter()
+
+```{r}
+a <-head(filter(chicago,pm25tmean2 >30))
+a
+summary(a$pm25tmean2)
+```
