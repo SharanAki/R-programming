@@ -33,3 +33,45 @@ a <-head(filter(chicago,pm25tmean2 >30))
 a
 summary(a$pm25tmean2)
 ```
+
+## arrange()
+
+```{r}
+head(select(chicago, date, pm25tmean2),3)
+tail(select(chicago, date, pm25tmean2),3)
+chicago <- arrange(chicago, desc(date))
+head(chicago)
+tail(chicago)
+```
+
+## rename
+
+```{r}
+chicago <- rename(chicago, dewpoint = dptp, pm25 = pm25tmean2, pm10 = pm10tmean2, o3 = o3tmean2, no2 = no2tmean2)
+head(chicago)
+```
+
+## mutate()
+
+```{r}
+chicago <- mutate(chicago, pm25trend = pm25 - mean(pm25, na.rm = TRUE) )
+head(chicago,3)
+```
+
+## group_by()
+
+```{r}
+chicago <- mutate(chicago, year = as.POSIXlt(date)$year + 1900)
+head(chicago)
+years <- group_by(chicago, year)
+```
+
+```{r}
+summarize(years, pm25 = mean(pm25 ,na.rm = T), o3 = max(o3, na.rm = T), no2 = median(no2, na.rm = T))
+```
+## %>%
+```{r}
+mutate(chicago, month = as.POSIXlt(date)$mon +1) %>%
+  group_by(month) %>%
+  summarize(pm25 = mean(pm25 ,na.rm = T), o3 = max(o3, na.rm = T), no2 = median(no2, na.rm = T))
+```

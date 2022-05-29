@@ -438,6 +438,114 @@ a</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   32.10   33.46   34.67   35.38   37.42   39.40</code></pre>
 </div>
+<div id="arrange" class="section level2">
+<h2>arrange()</h2>
+<pre class="r"><code>head(select(chicago, date, pm25tmean2),3)</code></pre>
+<pre><code>##         date pm25tmean2
+## 1 1987-01-01         NA
+## 2 1987-01-02         NA
+## 3 1987-01-03         NA</code></pre>
+<pre class="r"><code>tail(select(chicago, date, pm25tmean2),3)</code></pre>
+<pre><code>##            date pm25tmean2
+## 6938 2005-12-29    7.45000
+## 6939 2005-12-30   15.05714
+## 6940 2005-12-31   15.00000</code></pre>
+<pre class="r"><code>chicago &lt;- arrange(chicago, desc(date))
+head(chicago)</code></pre>
+<pre><code>##   city tmpd dptp       date pm25tmean2 pm10tmean2  o3tmean2 no2tmean2
+## 1 chic   35 30.1 2005-12-31   15.00000       23.5  2.531250  13.25000
+## 2 chic   36 31.0 2005-12-30   15.05714       19.2  3.034420  22.80556
+## 3 chic   35 29.4 2005-12-29    7.45000       23.5  6.794837  19.97222
+## 4 chic   37 34.5 2005-12-28   17.75000       27.5  3.260417  19.28563
+## 5 chic   40 33.6 2005-12-27   23.56000       27.0  4.468750  23.50000
+## 6 chic   35 29.6 2005-12-26    8.40000        8.5 14.041667  16.81944</code></pre>
+<pre class="r"><code>tail(chicago)</code></pre>
+<pre><code>##      city tmpd   dptp       date pm25tmean2 pm10tmean2 o3tmean2 no2tmean2
+## 6935 chic 40.0 35.125 1987-01-06         NA   48.00000 5.833333  25.77233
+## 6936 chic 32.0 28.875 1987-01-05         NA         NA 4.750000  30.33333
+## 6937 chic 29.0 28.625 1987-01-04         NA   47.00000 4.375000  30.43452
+## 6938 chic 33.0 27.375 1987-01-03         NA   34.16667 3.333333  23.81548
+## 6939 chic 33.0 29.875 1987-01-02         NA         NA 3.304348  23.19099
+## 6940 chic 31.5 31.500 1987-01-01         NA   34.00000 4.250000  19.98810</code></pre>
+</div>
+<div id="rename" class="section level2">
+<h2>rename</h2>
+<pre class="r"><code>chicago &lt;- rename(chicago, dewpoint = dptp, pm25 = pm25tmean2, pm10 = pm10tmean2, o3 = o3tmean2, no2 = no2tmean2)
+head(chicago)</code></pre>
+<pre><code>##   city tmpd dewpoint       date     pm25 pm10        o3      no2
+## 1 chic   35     30.1 2005-12-31 15.00000 23.5  2.531250 13.25000
+## 2 chic   36     31.0 2005-12-30 15.05714 19.2  3.034420 22.80556
+## 3 chic   35     29.4 2005-12-29  7.45000 23.5  6.794837 19.97222
+## 4 chic   37     34.5 2005-12-28 17.75000 27.5  3.260417 19.28563
+## 5 chic   40     33.6 2005-12-27 23.56000 27.0  4.468750 23.50000
+## 6 chic   35     29.6 2005-12-26  8.40000  8.5 14.041667 16.81944</code></pre>
+</div>
+<div id="mutate" class="section level2">
+<h2>mutate()</h2>
+<pre class="r"><code>chicago &lt;- mutate(chicago, pm25trend = pm25 - mean(pm25, na.rm = TRUE) )
+head(chicago,3)</code></pre>
+<pre><code>##   city tmpd dewpoint       date     pm25 pm10       o3      no2 pm25trend
+## 1 chic   35     30.1 2005-12-31 15.00000 23.5 2.531250 13.25000 -1.230958
+## 2 chic   36     31.0 2005-12-30 15.05714 19.2 3.034420 22.80556 -1.173815
+## 3 chic   35     29.4 2005-12-29  7.45000 23.5 6.794837 19.97222 -8.780958</code></pre>
+</div>
+<div id="group_by" class="section level2">
+<h2>group_by()</h2>
+<pre class="r"><code>chicago &lt;- mutate(chicago, year = as.POSIXlt(date)$year + 1900)
+head(chicago)</code></pre>
+<pre><code>##   city tmpd dewpoint       date     pm25 pm10        o3      no2 pm25trend year
+## 1 chic   35     30.1 2005-12-31 15.00000 23.5  2.531250 13.25000 -1.230958 2005
+## 2 chic   36     31.0 2005-12-30 15.05714 19.2  3.034420 22.80556 -1.173815 2005
+## 3 chic   35     29.4 2005-12-29  7.45000 23.5  6.794837 19.97222 -8.780958 2005
+## 4 chic   37     34.5 2005-12-28 17.75000 27.5  3.260417 19.28563  1.519042 2005
+## 5 chic   40     33.6 2005-12-27 23.56000 27.0  4.468750 23.50000  7.329042 2005
+## 6 chic   35     29.6 2005-12-26  8.40000  8.5 14.041667 16.81944 -7.830958 2005</code></pre>
+<pre class="r"><code>years &lt;- group_by(chicago, year)</code></pre>
+<pre class="r"><code>summarize(years, pm25 = mean(pm25 ,na.rm = T), o3 = max(o3, na.rm = T), no2 = median(no2, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 19 x 4
+##     year  pm25    o3   no2
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  1987 NaN    63.0  23.5
+##  2  1988 NaN    61.7  24.5
+##  3  1989 NaN    59.7  26.1
+##  4  1990 NaN    52.2  22.6
+##  5  1991 NaN    63.1  21.4
+##  6  1992 NaN    50.8  24.8
+##  7  1993 NaN    44.3  25.8
+##  8  1994 NaN    52.2  28.5
+##  9  1995 NaN    66.6  27.3
+## 10  1996 NaN    58.4  26.4
+## 11  1997 NaN    56.5  25.5
+## 12  1998  18.3  50.7  24.6
+## 13  1999  18.5  57.5  24.7
+## 14  2000  16.9  55.8  23.5
+## 15  2001  16.9  51.8  25.1
+## 16  2002  15.3  54.9  22.7
+## 17  2003  15.2  56.2  24.6
+## 18  2004  14.6  44.5  23.4
+## 19  2005  16.2  58.8  22.6</code></pre>
+</div>
+<div id="section" class="section level2">
+<h2>%&gt;%</h2>
+<pre class="r"><code>mutate(chicago, month = as.POSIXlt(date)$mon +1) %&gt;%
+  group_by(month) %&gt;%
+  summarize(pm25 = mean(pm25 ,na.rm = T), o3 = max(o3, na.rm = T), no2 = median(no2, na.rm = T))</code></pre>
+<pre><code>## # A tibble: 12 x 4
+##    month  pm25    o3   no2
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1  17.8  28.2  25.4
+##  2     2  20.4  37.4  26.8
+##  3     3  17.4  39.0  26.8
+##  4     4  13.9  47.9  25.0
+##  5     5  14.1  52.8  24.2
+##  6     6  15.9  66.6  25.0
+##  7     7  16.6  59.5  22.4
+##  8     8  16.9  54.0  23.0
+##  9     9  15.9  57.5  24.5
+## 10    10  14.2  47.1  24.2
+## 11    11  15.2  29.5  23.6
+## 12    12  17.5  27.7  24.5</code></pre>
+</div>
 </div>
 
 
