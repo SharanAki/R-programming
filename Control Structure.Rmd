@@ -1,0 +1,82 @@
+---
+title: "Control Structures"
+author: "sharan"
+date: '2022-06-02'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## for loop
+
+```{r}
+for(i in 1:10)
+  print(i)
+```
+
+```{r}
+x <- c("a","b","c","d")
+for(i in 1:4)
+  print(x[i])
+```
+
+```{r}
+for(i in seq_along(x)){
+  print(x[i])
+}
+
+```
+
+```{r}
+for(letter in x){
+print(letter)
+}
+```
+
+
+# Nested for Loops
+```{r}
+x <- matrix(1:6, 2 ,3)
+x
+for (i in seq_along(nrow(x))) {
+  for (j in seq_along(ncol(x))) {
+   print(x[i,j])
+  }
+}
+```
+
+##while loop
+```{r}
+i <- 0
+while (i <10) {
+  print(i)
+  i = i + 1 
+}
+```
+
+```{r}
+rbinom(1,1,0.5)
+
+```
+
+## next break
+
+```{r}
+for (i in 1:100){
+  print(i)
+  if(i > 20){
+    break
+  }
+}
+```
+
+```{r}
+for(i in 1:100){
+    if (i <= 20){
+    next
+    }
+  print(i)
+}
+```
