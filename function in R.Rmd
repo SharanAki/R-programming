@@ -1,0 +1,45 @@
+---
+title: "function"
+author: "sharan"
+date: '2022-06-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Functions in R
+
+```{r}
+f <- function(num = 1){
+  for (i in seq_len(num)) {
+    cat("Hello, World!\n")
+  }
+  }
+f(3)
+```
+
+## Lazy Evaluation
+
+```{r}
+f <- function(a,b){
+  a^4
+}
+f(2)
+```
+
+#The Argument
+
+```{r}
+mean
+args(cat)
+args(plot)
+args(lm)
+```
+
+##Argument coming After the...Argument
+```{r}
+args(paste)
+paste("a","b",sep = "8")
+```
